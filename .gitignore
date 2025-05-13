@@ -1,0 +1,44 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# virtual environment
+venv/
+.venv/
+
+# Package distribution
+*.egg
+*.whl
+dist
+build
+sdist
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.log
+*.tmp
+*.mo
+*.pot
+
+# Translations
+*.po
+*.mo
+
+# Flask specific
+instance/
+
+# General
+tmp/
+temp/
+*.swp
+*~
+.DS_Store
+.env
