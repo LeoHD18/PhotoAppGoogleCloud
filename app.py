@@ -125,14 +125,16 @@ def gallery():
         filename = photo['filename']
         bucket = storage_client.bucket(GCS_BUCKET)
         blob = bucket.blob(filename)
-        # Generate signed URLs valid for 1 hour
-        view_url = blob.generate_signed_url(version="v4", expiration=3600, method="GET")
-        download_url = blob.generate_signed_url(
-            version="v4",
-            expiration=3600,
-            method="GET",
-            response_disposition='attachment'
+           # Public URL (make sure you've granted allUsers the Storage Object Viewer role)
+        view_url = blob.public_url
+
+        # If you want a download link, you can append a response-content-disposition parameter:
+        download_url = (
+            f"{blob.public_url}"
+            f"?response-content-disposition=attachment;filename={filename}"
         )
+
+    
         photo_data.append({
             'view_url': view_url,
             'download_url': download_url,
@@ -161,13 +163,15 @@ def search():
             filename = photo['filename']
             bucket = storage_client.bucket(GCS_BUCKET)
             blob = bucket.blob(filename)
-            view_url = blob.generate_signed_url(version="v4", expiration=3600, method="GET")
-            download_url = blob.generate_signed_url(
-                version="v4",
-                expiration=3600,
-                method="GET",
-                response_disposition='attachment'
+             # Public URL (bucket must be granted allUsers:Object Viewer)
+            view_url = blob.public_url
+
+            # Download link via response-content-disposition query param
+            download_url = (
+                f"{blob.public_url}"
+                f"?response-content-disposition=attachment;filename={filename}"
             )
+
             photo_data.append({
                 'view_url': view_url,
                 'download_url': download_url,
