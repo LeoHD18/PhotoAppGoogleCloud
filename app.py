@@ -30,6 +30,16 @@ db_config = {
 def get_db_connection():
     return mysql.connector.connect(**db_config)
 
+#Health check
+@app.route('/test-db')
+def test_db():
+    try:
+        conn = get_db_connection()
+        conn.cursor().execute("SELECT 1")
+    except Exception as e:
+        return {'status': 'error', 'detail': str(e)}, 500
+    return {'status': 'ok'}, 200
+
 # Home Page
 @app.route('/')
 def home():
